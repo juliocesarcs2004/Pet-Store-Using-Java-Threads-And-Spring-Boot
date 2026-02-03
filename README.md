@@ -851,14 +851,6 @@ This project is provided as an educational example. Use it freely for learning a
 
 ---
 
-## 👨‍💻 Author
-
-**Developed during a Spring Boot and Threads course - Alura**
-
-For questions or suggestions, open an issue in the repository.
-
----
-
 ## 🎓 Concepts Learned
 
 This project demonstrates:
