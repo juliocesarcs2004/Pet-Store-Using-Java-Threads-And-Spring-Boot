@@ -11,11 +11,12 @@ public class EmailPedidoRealizado {
     @Autowired
     private EnviadorEmail enviador;
 
-    @Async
+    @Async("asyncExecutor")
     public void enviar(PedidoDTO dto, Usuario usuario){
         enviador.enviarEmail(
                 "Pedido efetuado com sucesso na Adopet Store",
                 usuario.getEmail(),
                 "Olá! " + "!\n\nSeu pedido foi registrado. Itens: \n" + dto.itens());
+        System.out.println("Thread do email: " + Thread.currentThread().getName());
     }
 }
