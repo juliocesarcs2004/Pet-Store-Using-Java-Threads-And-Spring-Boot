@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.ExecutionException;
+
 @Service
 public class AgendamentoService {
 
@@ -14,12 +16,16 @@ public class AgendamentoService {
     @Autowired
     private EmailRelatorioGerado enviador;
 
-    @Scheduled(cron = "0 32 16 * * *")
+    @Scheduled(cron = "0 10 18 * * *")
     public void envioEmailsAgendado(){
         var estoqueZerado = relatorioService.infoEstoque();
         var faturamentoObtido = relatorioService.faturamentoObtido();
 
-        enviador.enviar(estoqueZerado, faturamentoObtido);
+        try {
+            enviador.enviar(estoqueZerado.get(), faturamentoObtido.get());
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
 
         System.out.println("Thread do agendamento: " + Thread.currentThread().getName());
 
